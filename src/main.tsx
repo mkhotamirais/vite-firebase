@@ -15,6 +15,7 @@ import Gallery from "./pages/gallery/Gallery.tsx";
 import Product from "./pages/product/Product.tsx";
 import ProductCreate from "./pages/product/ProductCreate.tsx";
 import ArticleCreate from "./pages/article/ArticleCreate.tsx";
+import ArticleUpdate from "./pages/article/ArticleUpdate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route path="article">
           <Route index element={<Article />} />
           <Route path="create" element={<ArticleCreate />} />
+          <Route path="update/:id" element={<ArticleUpdate />} />
         </Route>
         <Route path="gallery" element={<Gallery />} />
         <Route path="product">

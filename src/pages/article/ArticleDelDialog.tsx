@@ -35,7 +35,7 @@ export default function ArticleDelDialog({ item }: { item: ArticleType }) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="flex">
         <Button size="icon" variant="destructive">
           <Trash className="size-4" />
         </Button>

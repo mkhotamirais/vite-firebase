@@ -5,6 +5,7 @@ import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArticleDelDialog from "./ArticleDelDialog";
+import { FaPenToSquare } from "react-icons/fa6";
 
 export type ArticleType = {
   id: string;
@@ -39,13 +40,13 @@ export default function Article() {
     const q = query(collection(firestore, "articles"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        console.log(change);
-        if (change.type === "added") {
-          console.log("New city: ", change.doc.data());
-        }
-        if (change.type === "modified") {
-          console.log("Modified city: ", change.doc.data());
-        }
+        // console.log(change);
+        // if (change.type === "added") {
+        //   console.log("New city: ", change.doc.data());
+        // }
+        // if (change.type === "modified") {
+        //   console.log("Modified city: ", change.doc.data());
+        // }
         if (change.type === "removed") {
           setData((prev) => [...prev.filter((item) => item.id !== change.doc.id)]);
         }
@@ -67,10 +68,15 @@ export default function Article() {
       {pendingPage && <LoaderFade />}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
         {data.map((article) => (
-          <div key={article.id} className="relative border rounded p-3">
+          <div key={article.id} className="group relative border rounded p-3">
             <h1 className="capitalize text-primary">{article.title}</h1>
             <p className="text-sm">{article.content}</p>
-            <div className="absolute top-0 right-0 p-2">
+            <div className="group-hover:scale-100 scale-0 transition absolute top-0 right-0 p-2 flex gap-1">
+              <Button asChild size={"icon"}>
+                <Link to={`/article/update/${article.id}`}>
+                  <FaPenToSquare />
+                </Link>
+              </Button>
               <ArticleDelDialog item={article} />
             </div>
           </div>
