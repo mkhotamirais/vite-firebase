@@ -13,6 +13,8 @@ import ProtectedRoute from "./components/redirects/ProtectedRoute.tsx";
 import Article from "./pages/article/Article.tsx";
 import Gallery from "./pages/gallery/Gallery.tsx";
 import Product from "./pages/product/Product.tsx";
+import ProductCreate from "./pages/product/ProductCreate.tsx";
+import ArticleCreate from "./pages/article/ArticleCreate.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,9 +25,15 @@ const router = createBrowserRouter(
         <Route path="sign-up" element={<Register />} />
       </Route>
       <Route element={<ProtectedRoute />}>
-        <Route path="article" element={<Article />} />
+        <Route path="article">
+          <Route index element={<Article />} />
+          <Route path="create" element={<ArticleCreate />} />
+        </Route>
         <Route path="gallery" element={<Gallery />} />
-        <Route path="product" element={<Product />} />
+        <Route path="product">
+          <Route index element={<Product />} />
+          <Route path="create" element={<ProductCreate />} />
+        </Route>
       </Route>
     </Route>
   )

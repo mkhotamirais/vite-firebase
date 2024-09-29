@@ -3,25 +3,41 @@ import { Button } from "../ui/button";
 import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAuth } from "@/hooks/useAuth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function AuthBtn() {
-  const { user: isAuth, setUser } = useAuth();
-  // const isAuth = auth?.currentUser;
+  const { user, setUser } = useAuth();
+  const onLogout = () => {
+    setUser(null);
+    signOut(auth);
+  };
 
   return (
     <div className="flex items-center gap-4">
-      {isAuth && (
-        <Button
-          onClick={() => {
-            setUser(null);
-            signOut(auth);
-          }}
-        >
-          Logout
-        </Button>
+      {user && (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src={user?.photoURL ?? "https://github.com/shadcn.png"} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>Account</DropdownMenuItem>
+              <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       )}
 
-      {!isAuth && (
+      {!user && (
         <div className="flex gap-2">
           <Button asChild variant={"link"}>
             <Link to="/sign-in">Login</Link>
