@@ -4,7 +4,7 @@ import MobileNav from "./MobileNav";
 
 export default function Header() {
   return (
-    <header className={`sticky top-0 h-16 transition duration-500 border-b`}>
+    <header className={`sticky top-0 bg-background h-16 transition duration-500 border-b`}>
       <div className="container flex items-center justify-between h-full">
         <div>
           <Logo />

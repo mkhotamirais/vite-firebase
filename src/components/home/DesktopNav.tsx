@@ -9,15 +9,15 @@ export default function DesktopNav() {
   const path1 = pathname.split("/")[1];
 
   return (
-    <div className="hidden md:flex gap-4">
-      <div className="flex gap-4 items-center text-sm">
+    <div className="hidden md:flex items-center gap-4">
+      <div className="flex items-center text-sm">
         {navMenu.map((item, i) => (
           <Link
             to={item.href}
             key={i}
             className={`${
               path1 === item.href.split("/")[1] ? "text-primary" : ""
-            } text-sm hover:text-primary transition`}
+            } text-sm hover:text-primary transition px-3`}
           >
             {item.label}
           </Link>
