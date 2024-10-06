@@ -16,6 +16,7 @@ import Product from "./pages/product/Product.tsx";
 import ProductCreate from "./pages/product/ProductCreate.tsx";
 import ArticleCreate from "./pages/article/ArticleCreate.tsx";
 import ArticleUpdate from "./pages/article/ArticleUpdate.tsx";
+import Chat from "./pages/chat/Chat.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
           <Route index element={<Product />} />
           <Route path="create" element={<ProductCreate />} />
         </Route>
+        <Route path="chat" element={<Chat />} />
       </Route>
     </Route>
   )

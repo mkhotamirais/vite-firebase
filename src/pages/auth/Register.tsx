@@ -7,7 +7,7 @@ import { RegisterSchema } from "./authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -20,13 +20,13 @@ export default function Register() {
 
   const form = useForm<RegisterType>({
     resolver: zodResolver(RegisterSchema),
-    defaultValues: { email: "", password: "", confPassword: "" },
+    defaultValues: { name: "", email: "", password: "", confPassword: "" },
   });
   const onSubmit = async (values: RegisterType) => {
-    console.log(values);
     setPending(true);
     await createUserWithEmailAndPassword(auth, values.email, values.password)
-      .then(() => {
+      .then((res) => {
+        updateProfile(res.user, { displayName: values.name });
         toast.success("Register success");
         navigate("/sign-in");
       })
@@ -43,6 +43,19 @@ export default function Register() {
         <h1 className="text-2xl font-bold pb-3 text-center">Register</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input type="text" disabled={pending} placeholder="Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
